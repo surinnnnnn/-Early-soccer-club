@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/gameDataClient"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_GAME")
+}
+
+model agents {
+  agent_id   Int    @id
+  agent_name String @unique
+  attack     Int    @default(10)
+  defense    Int    @default(10)
+  speed      Int    @default(10)
+  position   String
+}

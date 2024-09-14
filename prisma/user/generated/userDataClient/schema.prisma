@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/userDataClient"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_USER")
+}
+
+model users {
+  user_id   String   @id
+  password  String
+  nickname  String   @unique
+  cash      Int      @default(10000)
+  createdAt DateTime @default(now()) @map("createdAt")
+
+  team_members team_members[]
+  my_agents    my_agents[]
+}
+
+model my_agents {
+  my_agent_id Int      @id @default(autoincrement())
+  agent_id    Int
+  user_id     String
+  agent_name  String
+  count       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("createdAt")
+
+  users users @relation(fields: [user_id], references: [user_id], onDelete: Cascade) //계삭 시 보유 유저 및 팀 삭제                  
+}
+
+model team_members {
+  team_member_id Int      @id @default(autoincrement())
+  user_id        String
+  agent_id       Int
+  team_name      String
+  total_stat     Int
+  createdAt      DateTime @default(now()) @map("createdAt")
+  updatedAt      DateTime @updatedAt @map("updatedAt")
+
+  users users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}
