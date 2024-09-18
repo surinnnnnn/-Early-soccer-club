@@ -43,7 +43,6 @@ model team_members {
   user_id         String     
   agent_id        Int 
   team_name       String              
-  total_stat      Int 
   createdAt       DateTime   @default(now())  @map("createdAt")
   updatedAt       DateTime   @updatedAt       @map("updatedAt")
 
