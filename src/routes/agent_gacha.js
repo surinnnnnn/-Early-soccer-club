@@ -19,7 +19,7 @@ const verifToken = (req, res, next) => {
         req.user = decodoe;
         next();
     } catch (error) {
-        return.res.status(401).json({message : '유효하지 않은 인증값 입니다.'})
+        return res.status(401).json({message : '유효하지 않은 인증값 입니다.'});
     }
 };
 //선수뽑기
