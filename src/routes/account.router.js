@@ -1,5 +1,5 @@
 import express from 'express';
-import {prisma} from '@Prisma/client';
+import {gameDataClient} from '@Prisma/client';
 
 const router = express.Router();
 

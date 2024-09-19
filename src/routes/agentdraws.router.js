@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 router.get('api/agent', async(req,res) => {
     try {
-        const agents = await prisma.agents.findMany();
+        const agents = await gameDataClient.agents.findMany();
         res.json(agents);
         } catch(error) {
             console.error(error);
