@@ -1,5 +1,5 @@
 import express from "express";
-import { usersPrisma } from "../utils/Prisma/index.js";
+import { usersPrisma } from "../utils/prisma/index.js";
 import bcrypt from "bcrypt";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
