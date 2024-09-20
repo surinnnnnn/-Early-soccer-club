@@ -15,7 +15,7 @@ const verifToken = (req, res, next) => {
         return res.status(403).json({message :'사용자 인증이 필요합니다.'});
     }
     try  {
-        cosnt decode = jwt.verify(token, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decodoe;
         next();
     } catch (error) {

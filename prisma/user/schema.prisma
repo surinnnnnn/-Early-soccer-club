@@ -17,10 +17,10 @@ datasource db {
 model users {
   user_id         String     @id 
   password        String      
-  passwordCheck   String
   nickname        String     @unique   
   cash            Int        @default(10000) 
   createdAt       DateTime   @default(now())  @map("createdAt")
+  accountId Int    @id @default(autoincrement()) @map("account_id")
 
   team_members    team_members[]
   my_agents       my_agents[]          
