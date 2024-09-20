@@ -40,9 +40,9 @@ model my_agents {
 
 
 model team_members {
-  team_member_id  Int        @id @default(autoincrement())
+  team_id         Int        @id @default(autoincrement())
   user_id         String     
-  agent_id        Int 
+  agent_ids       Json
   team_name       String              
   createdAt       DateTime   @default(now())  @map("createdAt")
   updatedAt       DateTime   @updatedAt       @map("updatedAt")

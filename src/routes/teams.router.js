@@ -1,6 +1,6 @@
 import express from "express";
 import { gamePrisma, usersPrisma } from "../utils/prisma/index.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
+import authMiddleware from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -24,14 +24,35 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
     }
 
     //2) 이미 보유한 팀 있음
+
+    // 팀 정보 가져오기
+    const myTeam = await usersPrisma.team_members.findFirst({
+      where: { user_id },
+      select: {
+        user_id: true,
+        team_name: true,
+        agent_ids: true,
+      },
+    });
+
+    const members = await gamePrisma.agents.findMany({
+      where: { agent_id: { in: agent_ids } },
+      select: {
+        agent_id: true,
+        agent_name: true,
+      },
+    });
+
     const isExistMyteam = await usersPrisma.team_members.findFirst({
       where: { user_id },
     });
 
     if (isExistMyteam) {
-      return res
-        .status(400)
-        .json({ message: "이미 보유한 팀이 1개 있습니다." });
+      return res.status(400).json({
+        message: "이미 보유한 팀이 있습니다.",
+        team: myTeam.team_name,
+        members,
+      });
     }
 
     //3) 보유한 선수 부족
@@ -77,15 +98,15 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
       data: {
         user_id,
         team_name,
-        members: {
-          create: agent_ids.map((agent_id) => ({ agent_id })),
-        },
+        agent_ids,
       },
     });
 
-    return res
-      .status(201)
-      .json({ message: "팀이 성공적으로 생성되었습니다.", team: newTeam });
+    return res.status(201).json({
+      message: "팀이 성공적으로 생성되었습니다.",
+      team: myTeam.team_name,
+      members,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "에러가 발생했습니다.",
@@ -150,18 +171,38 @@ router.patch("/my_team", authMiddleware, async (req, res, next) => {
     }
 
     //6) 기존 팀 선수 삭제 및 새로운 선수 등록
-    await usersPrisma.team_members.update({
-      where: { id: existingTeam.id },
+    const teamUpdated = await usersPrisma.team_members.update({
+      where: { team_id: existingTeam.team_id },
       data: {
+        user_id,
         team_name,
-        members: {
-          deleteMany: {}, // 기존 멤버를 삭제
-          create: agent_ids.map((agent_id) => ({ agent_id })), // 새로운 멤버 추가
-        },
+        agent_ids,
       },
     });
 
-    return res.status(200).json({ message: "팀이 성공적으로 수정되었습니다." });
+    //7) 팀 정보 가져오기
+    const myTeam = await usersPrisma.team_members.findFirst({
+      where: { user_id },
+      select: {
+        user_id: true,
+        team_name: true,
+        agent_ids: true,
+      },
+    });
+
+    const members = await gamePrisma.agents.findMany({
+      where: { agent_id: { in: agent_ids } },
+      select: {
+        agent_id: true,
+        agent_name: true,
+      },
+    });
+
+    return res.status(200).json({
+      message: "팀이 성공적으로 수정되었습니다.",
+      team: myTeam.team_name,
+      members,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "에러가 발생했습니다.",
@@ -183,7 +224,7 @@ router.get(
       const existingTeam = await usersPrisma.team_members.findFirst({
         where: { user_id },
         include: {
-          members: true, // 팀 멤버 정보 포함
+          agent_ids: true, // 팀 멤버 정보 포함
         },
       });
 
@@ -213,7 +254,7 @@ router.get(
       const otherTeam = await usersPrisma.team_members.findFirst({
         where: { user_id: oppositeUser_Id },
         include: {
-          members: true, // 상대 팀 멤버 정보 포함
+          agent_ids: true, // 상대 팀 멤버 정보 포함
         },
       });
 
@@ -268,22 +309,35 @@ router.get("/teams", async (req, res, next) => {
   try {
     // 팀 목록을 조회, 팀 이름과 팀 멤버들 포함
     const teams = await usersPrisma.team_members.findMany({
-      include: {
-        members: true, // 각 팀의 멤버 정보 포함
+      select: {
+        team_name: true,
+        user_id: true,
+        agent_ids: true,
       },
     });
+    // 각 팀의 agent_ids를 기반으로 agent 정보 조회
+    const teamDataPromises = teams.map(async (team) => {
+      // agent_ids 배열에서 각 agent의 정보를 조회
+      const members = await gamePrisma.agents.findMany({
+        where: { agent_id: { in: team.agent_ids } },
+        select: {
+          agent_id: true,
+          agent_name: true,
+        },
+      });
 
-    // 각 팀의 agent_id, agent_name을 배열로 변환
-    const teamData = teams.map((team) => {
-      const agentIds = team.members.map(
-        (member) => `${member.agent_id}: ${member.agent_name}`,
-      );
+      // 팀 데이터 형식 정의
       return {
         team_name: team.team_name,
         user_id: team.user_id,
-        agent_ids: agentIds,
+        members: members.map(
+          (member) => `${member.agent_id} : ${member.agent_name}`,
+        ),
       };
     });
+
+    // 모든 팀 데이터를 처리
+    const teamData = await Promise.all(teamDataPromises);
 
     // 결과 반환
     return res.status(200).json({

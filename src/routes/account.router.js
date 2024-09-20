@@ -5,13 +5,26 @@ import authMiddleware from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 //회원가입 API
+<<<<<<< Updated upstream
 router.post("/sign-up", authMiddleware, async (req, res, next) => {
+=======
+router.post("/sign-up", async (req, res, next) => {
+>>>>>>> Stashed changes
   try {
-    const validaion = await usersSchema.validateAsync(req.body);
-    const { userid, password, checkpassword, nickname } = validaion;
+    const { user_id, password, checkpassword, nickname } = req.body;
+
+    // 아이디 중복 확인
+    const isExistUserId = await usersPrisma.users.findFirst({
+      where: { user_id },
+    });
+    if (isExistUserId) {
+      return res
+        .status(409)
+        .json({ errorMessage: "이미 존재하는 아이디입니다." });
+    }
 
     //닉네임 중복 확인
-    const isExistNickName = await usersprisma.users.findFirst({
+    const isExistNickName = await usersPrisma.users.findFirst({
       where: { nickname },
     });
     if (isExistNickName) {
@@ -20,7 +33,7 @@ router.post("/sign-up", authMiddleware, async (req, res, next) => {
         .json({ errorMessage: "이미 존재하는 이름입니다." });
     }
     //닉네임 글자 제한
-    if (nickname.length < 3 && nickname.length > 8) {
+    if (nickname.length < 3 || nickname.length > 8) {
       return res
         .status(400)
         .json({ errormessage: "닉네임은 3글자 이상, 8글자 이하여야 합니다." });
@@ -55,6 +68,7 @@ router.post("/sign-up", authMiddleware, async (req, res, next) => {
         },
       });
 
+<<<<<<< Updated upstream
       return [account, character];
     });
     return res.status(201).json({
@@ -62,12 +76,35 @@ router.post("/sign-up", authMiddleware, async (req, res, next) => {
       accountData: account,
       characterData: character,
     });
+=======
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    //유저 데이터 저장
+    const account = await usersPrisma.users.create({
+      data: {
+        user_id,
+        password: hashedPassword,
+        nickname,
+      },
+    });
+
+    // 유저 데이터 반환
+    const accountData = {
+      user_id: account.user_id,
+      nickname: account.nickname, // Corrected typo
+    };
+
+    return res
+      .status(201)
+      .json({ message: "회원가입이 완료되었습니다.", accountData });
+>>>>>>> Stashed changes
   } catch (err) {
     next(err);
   }
 });
 
 //로그인 API
+<<<<<<< Updated upstream
 router.post("/sign-in", authMiddleware, async (req, res, next) => {
   try {
     const validaion = await signInSchema.validateAsync(req.body);
@@ -76,6 +113,15 @@ router.post("/sign-in", authMiddleware, async (req, res, next) => {
     //1) 유저 존재 유무 확인
     const account = awiat.usersprisma.users.findFirst({
       where: { userid },
+=======
+router.post("/sign-in", async (req, res, next) => {
+  try {
+    const { user_id, password } = req.body;
+
+    //유저 존재 유무 확인
+    const account = await usersPrisma.users.findFirst({
+      where: { user_id },
+>>>>>>> Stashed changes
     });
     if (!account) {
       return res
@@ -100,4 +146,24 @@ router.post("/sign-in", authMiddleware, async (req, res, next) => {
   }
 });
 
+<<<<<<< Updated upstream
+=======
+//계정 조회 API
+router.get("/user", authMiddleware, async (req, res, next) => {
+  const { user_id } = req.user;
+
+  const user = await usersPrisma.users.findFirst({
+    where: { user_id },
+    select: {
+      user_id: true,
+      nickname: true,
+      createdAt: true,
+      cash: true,
+    },
+  });
+
+  return res.status(200).json({ user });
+});
+
+>>>>>>> Stashed changes
 export default router;

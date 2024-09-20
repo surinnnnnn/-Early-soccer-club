@@ -137,11 +137,10 @@ exports.Prisma.My_agentsScalarFieldEnum = {
 };
 
 exports.Prisma.Team_membersScalarFieldEnum = {
-  team_member_id: 'team_member_id',
+  team_id: 'team_id',
   user_id: 'user_id',
-  agent_id: 'agent_id',
+  agent_ids: 'agent_ids',
   team_name: 'team_name',
-  total_stat: 'total_stat',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -149,6 +148,16 @@ exports.Prisma.Team_membersScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 

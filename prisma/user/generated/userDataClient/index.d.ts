@@ -2944,43 +2944,34 @@ export namespace Prisma {
   }
 
   export type Team_membersAvgAggregateOutputType = {
-    team_member_id: number | null
-    agent_id: number | null
-    total_stat: number | null
+    team_id: number | null
   }
 
   export type Team_membersSumAggregateOutputType = {
-    team_member_id: number | null
-    agent_id: number | null
-    total_stat: number | null
+    team_id: number | null
   }
 
   export type Team_membersMinAggregateOutputType = {
-    team_member_id: number | null
+    team_id: number | null
     user_id: string | null
-    agent_id: number | null
     team_name: string | null
-    total_stat: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type Team_membersMaxAggregateOutputType = {
-    team_member_id: number | null
+    team_id: number | null
     user_id: string | null
-    agent_id: number | null
     team_name: string | null
-    total_stat: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type Team_membersCountAggregateOutputType = {
-    team_member_id: number
+    team_id: number
     user_id: number
-    agent_id: number
+    agent_ids: number
     team_name: number
-    total_stat: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2988,43 +2979,34 @@ export namespace Prisma {
 
 
   export type Team_membersAvgAggregateInputType = {
-    team_member_id?: true
-    agent_id?: true
-    total_stat?: true
+    team_id?: true
   }
 
   export type Team_membersSumAggregateInputType = {
-    team_member_id?: true
-    agent_id?: true
-    total_stat?: true
+    team_id?: true
   }
 
   export type Team_membersMinAggregateInputType = {
-    team_member_id?: true
+    team_id?: true
     user_id?: true
-    agent_id?: true
     team_name?: true
-    total_stat?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type Team_membersMaxAggregateInputType = {
-    team_member_id?: true
+    team_id?: true
     user_id?: true
-    agent_id?: true
     team_name?: true
-    total_stat?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type Team_membersCountAggregateInputType = {
-    team_member_id?: true
+    team_id?: true
     user_id?: true
-    agent_id?: true
+    agent_ids?: true
     team_name?: true
-    total_stat?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3117,11 +3099,10 @@ export namespace Prisma {
   }
 
   export type Team_membersGroupByOutputType = {
-    team_member_id: number
+    team_id: number
     user_id: string
-    agent_id: number
+    agent_ids: JsonValue
     team_name: string
-    total_stat: number
     createdAt: Date
     updatedAt: Date
     _count: Team_membersCountAggregateOutputType | null
@@ -3146,11 +3127,10 @@ export namespace Prisma {
 
 
   export type team_membersSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    team_member_id?: boolean
+    team_id?: boolean
     user_id?: boolean
-    agent_id?: boolean
+    agent_ids?: boolean
     team_name?: boolean
-    total_stat?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     users?: boolean | usersDefaultArgs<ExtArgs>
@@ -3158,11 +3138,10 @@ export namespace Prisma {
 
 
   export type team_membersSelectScalar = {
-    team_member_id?: boolean
+    team_id?: boolean
     user_id?: boolean
-    agent_id?: boolean
+    agent_ids?: boolean
     team_name?: boolean
-    total_stat?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -3177,11 +3156,10 @@ export namespace Prisma {
       users: Prisma.$usersPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      team_member_id: number
+      team_id: number
       user_id: string
-      agent_id: number
+      agent_ids: Prisma.JsonValue
       team_name: string
-      total_stat: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["team_members"]>
@@ -3267,8 +3245,8 @@ export namespace Prisma {
      * // Get first 10 Team_members
      * const team_members = await prisma.team_members.findMany({ take: 10 })
      * 
-     * // Only select the `team_member_id`
-     * const team_membersWithTeam_member_idOnly = await prisma.team_members.findMany({ select: { team_member_id: true } })
+     * // Only select the `team_id`
+     * const team_membersWithTeam_idOnly = await prisma.team_members.findMany({ select: { team_id: true } })
      * 
      */
     findMany<T extends team_membersFindManyArgs>(args?: SelectSubset<T, team_membersFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$team_membersPayload<ExtArgs>, T, "findMany">>
@@ -3554,11 +3532,10 @@ export namespace Prisma {
    * Fields of the team_members model
    */ 
   interface team_membersFieldRefs {
-    readonly team_member_id: FieldRef<"team_members", 'Int'>
+    readonly team_id: FieldRef<"team_members", 'Int'>
     readonly user_id: FieldRef<"team_members", 'String'>
-    readonly agent_id: FieldRef<"team_members", 'Int'>
+    readonly agent_ids: FieldRef<"team_members", 'Json'>
     readonly team_name: FieldRef<"team_members", 'String'>
-    readonly total_stat: FieldRef<"team_members", 'Int'>
     readonly createdAt: FieldRef<"team_members", 'DateTime'>
     readonly updatedAt: FieldRef<"team_members", 'DateTime'>
   }
@@ -3912,11 +3889,10 @@ export namespace Prisma {
 
 
   export const Team_membersScalarFieldEnum: {
-    team_member_id: 'team_member_id',
+    team_id: 'team_id',
     user_id: 'user_id',
-    agent_id: 'agent_id',
+    agent_ids: 'agent_ids',
     team_name: 'team_name',
-    total_stat: 'total_stat',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3930,6 +3906,22 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -3955,6 +3947,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
@@ -4094,47 +4093,43 @@ export namespace Prisma {
     AND?: team_membersWhereInput | team_membersWhereInput[]
     OR?: team_membersWhereInput[]
     NOT?: team_membersWhereInput | team_membersWhereInput[]
-    team_member_id?: IntFilter<"team_members"> | number
+    team_id?: IntFilter<"team_members"> | number
     user_id?: StringFilter<"team_members"> | string
-    agent_id?: IntFilter<"team_members"> | number
+    agent_ids?: JsonFilter<"team_members">
     team_name?: StringFilter<"team_members"> | string
-    total_stat?: IntFilter<"team_members"> | number
     createdAt?: DateTimeFilter<"team_members"> | Date | string
     updatedAt?: DateTimeFilter<"team_members"> | Date | string
     users?: XOR<UsersRelationFilter, usersWhereInput>
   }
 
   export type team_membersOrderByWithRelationInput = {
-    team_member_id?: SortOrder
+    team_id?: SortOrder
     user_id?: SortOrder
-    agent_id?: SortOrder
+    agent_ids?: SortOrder
     team_name?: SortOrder
-    total_stat?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     users?: usersOrderByWithRelationInput
   }
 
   export type team_membersWhereUniqueInput = Prisma.AtLeast<{
-    team_member_id?: number
+    team_id?: number
     AND?: team_membersWhereInput | team_membersWhereInput[]
     OR?: team_membersWhereInput[]
     NOT?: team_membersWhereInput | team_membersWhereInput[]
     user_id?: StringFilter<"team_members"> | string
-    agent_id?: IntFilter<"team_members"> | number
+    agent_ids?: JsonFilter<"team_members">
     team_name?: StringFilter<"team_members"> | string
-    total_stat?: IntFilter<"team_members"> | number
     createdAt?: DateTimeFilter<"team_members"> | Date | string
     updatedAt?: DateTimeFilter<"team_members"> | Date | string
     users?: XOR<UsersRelationFilter, usersWhereInput>
-  }, "team_member_id">
+  }, "team_id">
 
   export type team_membersOrderByWithAggregationInput = {
-    team_member_id?: SortOrder
+    team_id?: SortOrder
     user_id?: SortOrder
-    agent_id?: SortOrder
+    agent_ids?: SortOrder
     team_name?: SortOrder
-    total_stat?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: team_membersCountOrderByAggregateInput
@@ -4148,11 +4143,10 @@ export namespace Prisma {
     AND?: team_membersScalarWhereWithAggregatesInput | team_membersScalarWhereWithAggregatesInput[]
     OR?: team_membersScalarWhereWithAggregatesInput[]
     NOT?: team_membersScalarWhereWithAggregatesInput | team_membersScalarWhereWithAggregatesInput[]
-    team_member_id?: IntWithAggregatesFilter<"team_members"> | number
+    team_id?: IntWithAggregatesFilter<"team_members"> | number
     user_id?: StringWithAggregatesFilter<"team_members"> | string
-    agent_id?: IntWithAggregatesFilter<"team_members"> | number
+    agent_ids?: JsonWithAggregatesFilter<"team_members">
     team_name?: StringWithAggregatesFilter<"team_members"> | string
-    total_stat?: IntWithAggregatesFilter<"team_members"> | number
     createdAt?: DateTimeWithAggregatesFilter<"team_members"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"team_members"> | Date | string
   }
@@ -4281,67 +4275,60 @@ export namespace Prisma {
   }
 
   export type team_membersCreateInput = {
-    agent_id: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
     users: usersCreateNestedOneWithoutTeam_membersInput
   }
 
   export type team_membersUncheckedCreateInput = {
-    team_member_id?: number
+    team_id?: number
     user_id: string
-    agent_id: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type team_membersUpdateInput = {
-    agent_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: usersUpdateOneRequiredWithoutTeam_membersNestedInput
   }
 
   export type team_membersUncheckedUpdateInput = {
-    team_member_id?: IntFieldUpdateOperationsInput | number
+    team_id?: IntFieldUpdateOperationsInput | number
     user_id?: StringFieldUpdateOperationsInput | string
-    agent_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type team_membersCreateManyInput = {
-    team_member_id?: number
+    team_id?: number
     user_id: string
-    agent_id: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type team_membersUpdateManyMutationInput = {
-    agent_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type team_membersUncheckedUpdateManyInput = {
-    team_member_id?: IntFieldUpdateOperationsInput | number
+    team_id?: IntFieldUpdateOperationsInput | number
     user_id?: StringFieldUpdateOperationsInput | string
-    agent_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4524,47 +4511,85 @@ export namespace Prisma {
     agent_id?: SortOrder
     count?: SortOrder
   }
+  export type JsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type team_membersCountOrderByAggregateInput = {
-    team_member_id?: SortOrder
+    team_id?: SortOrder
     user_id?: SortOrder
-    agent_id?: SortOrder
+    agent_ids?: SortOrder
     team_name?: SortOrder
-    total_stat?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type team_membersAvgOrderByAggregateInput = {
-    team_member_id?: SortOrder
-    agent_id?: SortOrder
-    total_stat?: SortOrder
+    team_id?: SortOrder
   }
 
   export type team_membersMaxOrderByAggregateInput = {
-    team_member_id?: SortOrder
+    team_id?: SortOrder
     user_id?: SortOrder
-    agent_id?: SortOrder
     team_name?: SortOrder
-    total_stat?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type team_membersMinOrderByAggregateInput = {
-    team_member_id?: SortOrder
+    team_id?: SortOrder
     user_id?: SortOrder
-    agent_id?: SortOrder
     team_name?: SortOrder
-    total_stat?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type team_membersSumOrderByAggregateInput = {
-    team_member_id?: SortOrder
-    agent_id?: SortOrder
-    total_stat?: SortOrder
+    team_id?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type team_membersCreateNestedManyWithoutUsersInput = {
@@ -4788,20 +4813,40 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue
+    lte?: InputJsonValue
+    gt?: InputJsonValue
+    gte?: InputJsonValue
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type team_membersCreateWithoutUsersInput = {
-    agent_id: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type team_membersUncheckedCreateWithoutUsersInput = {
-    team_member_id?: number
-    agent_id: number
+    team_id?: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4861,11 +4906,10 @@ export namespace Prisma {
     AND?: team_membersScalarWhereInput | team_membersScalarWhereInput[]
     OR?: team_membersScalarWhereInput[]
     NOT?: team_membersScalarWhereInput | team_membersScalarWhereInput[]
-    team_member_id?: IntFilter<"team_members"> | number
+    team_id?: IntFilter<"team_members"> | number
     user_id?: StringFilter<"team_members"> | string
-    agent_id?: IntFilter<"team_members"> | number
+    agent_ids?: JsonFilter<"team_members">
     team_name?: StringFilter<"team_members"> | string
-    total_stat?: IntFilter<"team_members"> | number
     createdAt?: DateTimeFilter<"team_members"> | Date | string
     updatedAt?: DateTimeFilter<"team_members"> | Date | string
   }
@@ -5003,10 +5047,9 @@ export namespace Prisma {
   }
 
   export type team_membersCreateManyUsersInput = {
-    team_member_id?: number
-    agent_id: number
+    team_id?: number
+    agent_ids: JsonNullValueInput | InputJsonValue
     team_name: string
-    total_stat: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5020,27 +5063,24 @@ export namespace Prisma {
   }
 
   export type team_membersUpdateWithoutUsersInput = {
-    agent_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type team_membersUncheckedUpdateWithoutUsersInput = {
-    team_member_id?: IntFieldUpdateOperationsInput | number
-    agent_id?: IntFieldUpdateOperationsInput | number
+    team_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type team_membersUncheckedUpdateManyWithoutUsersInput = {
-    team_member_id?: IntFieldUpdateOperationsInput | number
-    agent_id?: IntFieldUpdateOperationsInput | number
+    team_id?: IntFieldUpdateOperationsInput | number
+    agent_ids?: JsonNullValueInput | InputJsonValue
     team_name?: StringFieldUpdateOperationsInput | string
-    total_stat?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

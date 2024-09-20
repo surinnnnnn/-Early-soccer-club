@@ -14,4 +14,4 @@ router.get("/all_agent", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
