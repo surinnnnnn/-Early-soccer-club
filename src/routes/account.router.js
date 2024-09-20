@@ -7,13 +7,14 @@ import bcrypt from "bcrypt";
 const router = express.Router();
 
 //회원가입 API
-router.post("api/sign-up", authMiddleware, async (req, res, next) => {
+router.post("/sign-up", async (req, res, next) => {
   try {
-    const validaion = await usersSchema.validateAsync(req.body);
-    const { userid, password, checkpassword, nickname } = validaion;
+    //const validaion = await usersSchema.validateAsync(req.body);
+    // const { userid, password, checkpassword, nickname } = validaion;
+    const { user_id, password, checkpassword, nickname } = req.body;
 
     //닉네임 중복 확인
-    const isExistNickName = await usersprisma.users.findFirst({
+    const isExistNickName = await usersPrisma.users.findFirst({
       where: { nickname },
     });
     if (isExistNickName) {
@@ -38,15 +39,15 @@ router.post("api/sign-up", authMiddleware, async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     //유저 데이터 저장
-    const account = await usersprisma.users.create({
+    const account = await usersPrisma.users.create({
       data: {
-        userid,
+        user_id,
         password: hashedPassword,
         nickname,
-        accountId: account.accountId,
+        //accountId: account.accountId,
       },
       select: {
-        accountId: true,
+        //accountId: true,
         nickname: true,
         cash: true,
       },
@@ -61,14 +62,13 @@ router.post("api/sign-up", authMiddleware, async (req, res, next) => {
 });
 
 //로그인 API
-router.post("/api/sign-in", authMiddleware, async (req, res, next) => {
+router.post("/sign-in", async (req, res, next) => {
   try {
-    const validaion = await usersSchema.validateAsync(req.body);
-    const { userid, password } = validaion;
+    const { user_id, password } = req.body;
 
     //유저 존재 유무 확인
-    const account = awiat.usersprisma.users.findFirst({
-      where: { userid },
+    const account = await usersPrisma.users.findFirst({
+      where: { user_id },
     });
     if (!account) {
       return res
@@ -85,7 +85,7 @@ router.post("/api/sign-in", authMiddleware, async (req, res, next) => {
 
     const token = jwt.sign(
       {
-        accountId: account.accountId,
+        user_id: account.user_id,
       },
       "custom-secret-key",
     );
@@ -98,13 +98,13 @@ router.post("/api/sign-in", authMiddleware, async (req, res, next) => {
 });
 
 //계정 조회 API
-router.get("api/user", authMiddleware, async (req, res, next) => {
-  const { userId } = req.users;
+router.get("/user", authMiddleware, async (req, res, next) => {
+  const { user_id } = req.user;
 
-  const user = await usersprisma.users.findFirst({
-    where: { userId: +userId },
+  const user = await usersPrisma.users.findFirst({
+    where: { user_id},
     select: {
-      userId: true,
+      user_id: true,
       nickname: true,
       createdAt: true,
       cash: true,

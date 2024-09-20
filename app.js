@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import agentPush from "./src/routes/agents.push.router.js";
 import account from "./src/routes/account.router.js";
+import cash from "./src/routes/cash.router.js"
 
 dotenv.config();
 
@@ -12,8 +13,7 @@ const PORT = 3306;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", [agentPush]);
-app.use("/api", [account]);
+app.use("/api", [agentPush, account, cash]);
 
 app.listen(PORT, () => {
   console.log(PORT, "포트로 서버가 열렸어요!");

@@ -1,22 +1,31 @@
 import express from "express";
-import authMiddleware from "../middlewares/auth.middleware.js";
-import { usersprisma } from "../utils/prisma/index.js";
+import authMiddleware from "../middleware/auth.middleware.js";
+import { usersPrisma } from "../utils/prisma/index.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.patch("/users/cash", authMiddleware, async (req, res, next) => {
+router.patch("/user/cash", authMiddleware, async (req, res, next) => {
   try {
-    const user = req.users;
-    const { cash } = await cashSchema.validateAsync(req.body);
-    const changeduser = await usersprisma.users.update({
+    const {user_id} = req.user;
+    const {cash} = req.body;
+    const changeduser = await usersPrisma.users.update({
       where: {
-        accountId: user.accountId,
+        user_id,
       },
       data: {
         cash: { increment: cash },
       },
     });
+
+    const user = await usersPrisma.users.findFirst({
+      where:{user_id},
+      select:{
+        user_id: true,
+        nickname: true,
+        cash: true,
+      },
+    })
 
     return res.status(200).json({
       message: `${cash} 캐시가 구매되었습니다.`,

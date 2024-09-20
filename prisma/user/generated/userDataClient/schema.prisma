@@ -15,11 +15,11 @@ datasource db {
 }
 
 model users {
-  user_id   String   @id
-  password  String
-  nickname  String   @unique
-  cash      Int      @default(10000)
-  createdAt DateTime @default(now()) @map("createdAt")
+  user_id       String   @id
+  password      String
+  nickname      String   @unique
+  cash          Int      @default(10000)
+  createdAt     DateTime @default(now()) @map("createdAt")
 
   team_members team_members[]
   my_agents    my_agents[]
@@ -41,7 +41,6 @@ model team_members {
   user_id        String
   agent_id       Int
   team_name      String
-  total_stat     Int
   createdAt      DateTime @default(now()) @map("createdAt")
   updatedAt      DateTime @updatedAt @map("updatedAt")
 
