@@ -10,7 +10,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
     const { user_id } = req.user;
     const { team_name, agent_ids } = req.body;
 
-    //1) 필수 입력 누락
+    // 1) 필수 입력 누락
     if (!team_name || !agent_ids || agent_ids.length < 3) {
       return res.status(400).json({
         message:
@@ -18,7 +18,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
       });
     }
 
-    //2) 이미 보유한 팀 있음
+    // 2) 이미 보유한 팀 있음
 
     // 팀 정보 가져오기
     const myTeam = await usersPrisma.team_members.findFirst({
@@ -30,27 +30,30 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
       },
     });
 
-    const members = await gamePrisma.agents.findMany({
-      where: { agent_id: { in: myTeam.agent_ids } },
-      select: {
-        agent_id: true,
-        agent_name: true,
-      },
-    });
-
-    const isExistMyteam = await usersPrisma.team_members.findFirst({
-      where: { user_id },
-    });
-
-    if (isExistMyteam) {
-      return res.status(400).json({
-        message: "이미 보유한 팀이 있습니다.",
-        team: myTeam.team_name,
-        members,
+    // myTeam이 존재하면 선수 명단 가져오기
+    if (myTeam) {
+      const members = await gamePrisma.agents.findMany({
+        where: { agent_id: { in: myTeam.agent_ids || [] } }, // myTeam.agent_ids가 null일 경우 빈 배열을 사용
+        select: {
+          agent_id: true,
+          agent_name: true,
+        },
       });
+
+      const isExistMyteam = await usersPrisma.team_members.findFirst({
+        where: { user_id },
+      });
+
+      if (isExistMyteam) {
+        return res.status(400).json({
+          message: "이미 보유한 팀이 있습니다.",
+          team: myTeam.team_name,
+          members,
+        });
+      }
     }
 
-    //3) 보유한 선수 부족
+    // 3) 보유한 선수 부족
     const countOfmyagents = await usersPrisma.my_agents.count({
       where: { user_id },
     });
@@ -59,7 +62,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
       return res.status(400).json({ message: "스카웃한 선수가 부족합니다." });
     }
 
-    //4) 입력한 선수 아이디가 보유한 선수인지 확인
+    // 4) 입력한 선수 아이디가 보유한 선수인지 확인
     const myAgents = await usersPrisma.my_agents.findMany({
       where: { user_id, agent_id: { in: agent_ids } },
     });
@@ -70,7 +73,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
       });
     }
 
-    //5) 중복된 팀 이름 입력
+    // 5) 중복된 팀 이름 입력
     const isExistTeam = await usersPrisma.team_members.findFirst({
       where: { team_name },
     });
@@ -81,7 +84,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
         .json({ message: "이미 사용 중인 팀 이름 입니다." });
     }
 
-    //6) 팀 이름 길이 초과 및 특수 문자 사용
+    // 6) 팀 이름 길이 초과 및 특수 문자 사용
     if (team_name.length > 6) {
       return res
         .status(400)
@@ -94,6 +97,15 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
         user_id,
         team_name,
         agent_ids,
+      },
+    });
+
+    // 8) 선수 명단 가져오기
+    const members = await gamePrisma.agents.findMany({
+      where: { agent_id: { in: myTeam.agent_ids || [] } }, // myTeam.agent_ids가 null일 경우 빈 배열을 사용
+      select: {
+        agent_id: true,
+        agent_name: true,
       },
     });
 

@@ -110,13 +110,39 @@ router.post(
         }
       }
 
-      // 우리팀이 2골 이상 넣었는지 확인
-      const result =
-        myTeamGoals >= 2
-          ? `축하합니다. [${myteam.team_name}] 승리!`
-          : `우리팀 패배..`;
+      // 승패 따라서 전적 업데이트
+      let result;
 
-      // 선수들 정보 가져오기
+      if (myTeamGoals >= 2) {
+        result = `축하합니다. [${myteam.team_name}] 승리!`;
+        await usersPrisma.users.update({
+          where: { user_id },
+          data: {
+            win: { increment: 1 },
+            matches: { increment: 1 },
+          },
+        });
+      } else {
+        result = `우리팀 패배..`;
+        await usersPrisma.users.update({
+          where: { user_id },
+          data: {
+            lost: { increment: 1 },
+            matches: { increment: 1 },
+          },
+        });
+      }
+
+      // 내 전적 가져오기
+      const myRecord = await usersPrisma.users.findFirst({
+        where: { user_id },
+        select: { win: true, lost: true, matches: true },
+      });
+
+      // 승률 표시
+      const odds = (myRecord.win / myRecord.matches) * 100;
+
+      // 선수들 정보 가공 소속팀|아이디+이름
       let groupMember = { group1: [], group2: [], group3: [] };
 
       Object.keys(groups).forEach((groupKey) => {
@@ -136,9 +162,10 @@ router.post(
       return res.status(200).json({
         message: "경기가 종료되었습니다!",
         groups: groupMember,
-        goal_probability: probabilitiesGroup, // 오타 수정
-        my_team_goals: `${myTeamGoals}:${3 - myTeamGoals}`,
+        goal_probability: probabilitiesGroup,
+        my_team_goals: `${myTeamGoals}:${Object.keys(groups).length - myTeamGoals}`,
         result: result,
+        odds_of_winning: `${odds}%`,
       });
     } catch (error) {
       return res.status(500).json({

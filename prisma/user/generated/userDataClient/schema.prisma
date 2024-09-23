@@ -19,6 +19,9 @@ model users {
   password  String
   nickname  String   @unique
   cash      Int      @default(10000)
+  matches   Int      @default(0)
+  win       Int      @default(0)
+  lost      Int      @default(0)
   createdAt DateTime @default(now()) @map("createdAt")
 
   team_members team_members[]

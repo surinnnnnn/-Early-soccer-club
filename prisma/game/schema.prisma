@@ -22,4 +22,5 @@ model agents {
   speed           Int        @default(10)
   position        String
 
-}
+} 
+

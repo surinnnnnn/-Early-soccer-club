@@ -58,7 +58,7 @@ router.post("/agent/gacha", authMiddleware, async (req, res, next) => {
           my_agent_id: isExistMember.my_agent_id, // 존재하는 에이전트 ID
         },
         data: {
-          count: { increment: count }, // 소유 수량 증가
+          count: { increment: 1 }, // 소유 수량 +1 증가
         },
       });
     } else {

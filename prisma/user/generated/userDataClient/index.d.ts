@@ -1054,10 +1054,16 @@ export namespace Prisma {
 
   export type UsersAvgAggregateOutputType = {
     cash: number | null
+    matches: number | null
+    win: number | null
+    lost: number | null
   }
 
   export type UsersSumAggregateOutputType = {
     cash: number | null
+    matches: number | null
+    win: number | null
+    lost: number | null
   }
 
   export type UsersMinAggregateOutputType = {
@@ -1065,6 +1071,9 @@ export namespace Prisma {
     password: string | null
     nickname: string | null
     cash: number | null
+    matches: number | null
+    win: number | null
+    lost: number | null
     createdAt: Date | null
   }
 
@@ -1073,6 +1082,9 @@ export namespace Prisma {
     password: string | null
     nickname: string | null
     cash: number | null
+    matches: number | null
+    win: number | null
+    lost: number | null
     createdAt: Date | null
   }
 
@@ -1081,6 +1093,9 @@ export namespace Prisma {
     password: number
     nickname: number
     cash: number
+    matches: number
+    win: number
+    lost: number
     createdAt: number
     _all: number
   }
@@ -1088,10 +1103,16 @@ export namespace Prisma {
 
   export type UsersAvgAggregateInputType = {
     cash?: true
+    matches?: true
+    win?: true
+    lost?: true
   }
 
   export type UsersSumAggregateInputType = {
     cash?: true
+    matches?: true
+    win?: true
+    lost?: true
   }
 
   export type UsersMinAggregateInputType = {
@@ -1099,6 +1120,9 @@ export namespace Prisma {
     password?: true
     nickname?: true
     cash?: true
+    matches?: true
+    win?: true
+    lost?: true
     createdAt?: true
   }
 
@@ -1107,6 +1131,9 @@ export namespace Prisma {
     password?: true
     nickname?: true
     cash?: true
+    matches?: true
+    win?: true
+    lost?: true
     createdAt?: true
   }
 
@@ -1115,6 +1142,9 @@ export namespace Prisma {
     password?: true
     nickname?: true
     cash?: true
+    matches?: true
+    win?: true
+    lost?: true
     createdAt?: true
     _all?: true
   }
@@ -1210,6 +1240,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash: number
+    matches: number
+    win: number
+    lost: number
     createdAt: Date
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -1237,6 +1270,9 @@ export namespace Prisma {
     password?: boolean
     nickname?: boolean
     cash?: boolean
+    matches?: boolean
+    win?: boolean
+    lost?: boolean
     createdAt?: boolean
     team_members?: boolean | users$team_membersArgs<ExtArgs>
     my_agents?: boolean | users$my_agentsArgs<ExtArgs>
@@ -1249,6 +1285,9 @@ export namespace Prisma {
     password?: boolean
     nickname?: boolean
     cash?: boolean
+    matches?: boolean
+    win?: boolean
+    lost?: boolean
     createdAt?: boolean
   }
 
@@ -1269,6 +1308,9 @@ export namespace Prisma {
       password: string
       nickname: string
       cash: number
+      matches: number
+      win: number
+      lost: number
       createdAt: Date
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -1645,6 +1687,9 @@ export namespace Prisma {
     readonly password: FieldRef<"users", 'String'>
     readonly nickname: FieldRef<"users", 'String'>
     readonly cash: FieldRef<"users", 'Int'>
+    readonly matches: FieldRef<"users", 'Int'>
+    readonly win: FieldRef<"users", 'Int'>
+    readonly lost: FieldRef<"users", 'Int'>
     readonly createdAt: FieldRef<"users", 'DateTime'>
   }
     
@@ -3870,6 +3915,9 @@ export namespace Prisma {
     password: 'password',
     nickname: 'nickname',
     cash: 'cash',
+    matches: 'matches',
+    win: 'win',
+    lost: 'lost',
     createdAt: 'createdAt'
   };
 
@@ -3975,6 +4023,9 @@ export namespace Prisma {
     password?: StringFilter<"users"> | string
     nickname?: StringFilter<"users"> | string
     cash?: IntFilter<"users"> | number
+    matches?: IntFilter<"users"> | number
+    win?: IntFilter<"users"> | number
+    lost?: IntFilter<"users"> | number
     createdAt?: DateTimeFilter<"users"> | Date | string
     team_members?: Team_membersListRelationFilter
     my_agents?: My_agentsListRelationFilter
@@ -3985,6 +4036,9 @@ export namespace Prisma {
     password?: SortOrder
     nickname?: SortOrder
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
     createdAt?: SortOrder
     team_members?: team_membersOrderByRelationAggregateInput
     my_agents?: my_agentsOrderByRelationAggregateInput
@@ -3998,6 +4052,9 @@ export namespace Prisma {
     NOT?: usersWhereInput | usersWhereInput[]
     password?: StringFilter<"users"> | string
     cash?: IntFilter<"users"> | number
+    matches?: IntFilter<"users"> | number
+    win?: IntFilter<"users"> | number
+    lost?: IntFilter<"users"> | number
     createdAt?: DateTimeFilter<"users"> | Date | string
     team_members?: Team_membersListRelationFilter
     my_agents?: My_agentsListRelationFilter
@@ -4008,6 +4065,9 @@ export namespace Prisma {
     password?: SortOrder
     nickname?: SortOrder
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
     createdAt?: SortOrder
     _count?: usersCountOrderByAggregateInput
     _avg?: usersAvgOrderByAggregateInput
@@ -4024,6 +4084,9 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"users"> | string
     nickname?: StringWithAggregatesFilter<"users"> | string
     cash?: IntWithAggregatesFilter<"users"> | number
+    matches?: IntWithAggregatesFilter<"users"> | number
+    win?: IntWithAggregatesFilter<"users"> | number
+    lost?: IntWithAggregatesFilter<"users"> | number
     createdAt?: DateTimeWithAggregatesFilter<"users"> | Date | string
   }
 
@@ -4156,6 +4219,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     team_members?: team_membersCreateNestedManyWithoutUsersInput
     my_agents?: my_agentsCreateNestedManyWithoutUsersInput
@@ -4166,6 +4232,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     team_members?: team_membersUncheckedCreateNestedManyWithoutUsersInput
     my_agents?: my_agentsUncheckedCreateNestedManyWithoutUsersInput
@@ -4176,6 +4245,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team_members?: team_membersUpdateManyWithoutUsersNestedInput
     my_agents?: my_agentsUpdateManyWithoutUsersNestedInput
@@ -4186,6 +4258,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team_members?: team_membersUncheckedUpdateManyWithoutUsersNestedInput
     my_agents?: my_agentsUncheckedUpdateManyWithoutUsersNestedInput
@@ -4196,6 +4271,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
   }
 
@@ -4204,6 +4282,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4212,6 +4293,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4394,11 +4478,17 @@ export namespace Prisma {
     password?: SortOrder
     nickname?: SortOrder
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
     createdAt?: SortOrder
   }
 
   export type usersAvgOrderByAggregateInput = {
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
   }
 
   export type usersMaxOrderByAggregateInput = {
@@ -4406,6 +4496,9 @@ export namespace Prisma {
     password?: SortOrder
     nickname?: SortOrder
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -4414,11 +4507,17 @@ export namespace Prisma {
     password?: SortOrder
     nickname?: SortOrder
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
     createdAt?: SortOrder
   }
 
   export type usersSumOrderByAggregateInput = {
     cash?: SortOrder
+    matches?: SortOrder
+    win?: SortOrder
+    lost?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4947,6 +5046,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     team_members?: team_membersCreateNestedManyWithoutUsersInput
   }
@@ -4956,6 +5058,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     team_members?: team_membersUncheckedCreateNestedManyWithoutUsersInput
   }
@@ -4981,6 +5086,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team_members?: team_membersUpdateManyWithoutUsersNestedInput
   }
@@ -4990,6 +5098,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team_members?: team_membersUncheckedUpdateManyWithoutUsersNestedInput
   }
@@ -4999,6 +5110,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     my_agents?: my_agentsCreateNestedManyWithoutUsersInput
   }
@@ -5008,6 +5122,9 @@ export namespace Prisma {
     password: string
     nickname: string
     cash?: number
+    matches?: number
+    win?: number
+    lost?: number
     createdAt?: Date | string
     my_agents?: my_agentsUncheckedCreateNestedManyWithoutUsersInput
   }
@@ -5033,6 +5150,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     my_agents?: my_agentsUpdateManyWithoutUsersNestedInput
   }
@@ -5042,6 +5162,9 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     nickname?: StringFieldUpdateOperationsInput | string
     cash?: IntFieldUpdateOperationsInput | number
+    matches?: IntFieldUpdateOperationsInput | number
+    win?: IntFieldUpdateOperationsInput | number
+    lost?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     my_agents?: my_agentsUncheckedUpdateManyWithoutUsersNestedInput
   }

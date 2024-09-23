@@ -124,6 +124,9 @@ exports.Prisma.UsersScalarFieldEnum = {
   password: 'password',
   nickname: 'nickname',
   cash: 'cash',
+  matches: 'matches',
+  win: 'win',
+  lost: 'lost',
   createdAt: 'createdAt'
 };
 
