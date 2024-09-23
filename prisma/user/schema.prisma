@@ -17,7 +17,6 @@ datasource db {
 model users {
   user_id         String     @id 
   password        String      
-  passwordCheck   String
   nickname        String     @unique   
   cash            Int        @default(10000) 
   createdAt       DateTime   @default(now())  @map("createdAt")

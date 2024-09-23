@@ -1,15 +1,12 @@
 import express from "express";
-import { usersprisma } from "../utils/prisma/index.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
-
+import { usersPrisma } from "../utils/prisma/index.js";
+import authMiddleware from "../middleware/auth.middleware.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 //회원가입 API
-<<<<<<< Updated upstream
-router.post("/sign-up", authMiddleware, async (req, res, next) => {
-=======
 router.post("/sign-up", async (req, res, next) => {
->>>>>>> Stashed changes
   try {
     const { user_id, password, checkpassword, nickname } = req.body;
 
@@ -46,38 +43,6 @@ router.post("/sign-up", async (req, res, next) => {
         errormessage: "비밀번호와 비밀번호 확인이 일치하지 않습니다.",
       });
     }
-    const [account, character] = await usersprisma.$transaction(async (tx) => {
-      const account = await tx.users.create({
-        data: {
-          userid,
-          password: hashedPassword,
-        },
-        select: {
-          userid: true,
-          nickname: true,
-        },
-      });
-      const character = await tx.character.create({
-        data: {
-          AccountId: account.accountId,
-          nickname,
-        },
-        select: {
-          nickname: true,
-          cash: true,
-        },
-      });
-
-<<<<<<< Updated upstream
-      return [account, character];
-    });
-    return res.status(201).json({
-      message: "회원가입이 완료되었습니다.",
-      accountData: account,
-      characterData: character,
-    });
-=======
-    const hashedPassword = await bcrypt.hash(password, 10);
 
     //유저 데이터 저장
     const account = await usersPrisma.users.create({
@@ -97,23 +62,15 @@ router.post("/sign-up", async (req, res, next) => {
     return res
       .status(201)
       .json({ message: "회원가입이 완료되었습니다.", accountData });
->>>>>>> Stashed changes
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    return res.status(500).json({
+      message: "에러가 발생했습니다.",
+      error: error.message,
+    });
   }
 });
 
 //로그인 API
-<<<<<<< Updated upstream
-router.post("/sign-in", authMiddleware, async (req, res, next) => {
-  try {
-    const validaion = await signInSchema.validateAsync(req.body);
-    const { userid, password } = validaion;
-
-    //1) 유저 존재 유무 확인
-    const account = awiat.usersprisma.users.findFirst({
-      where: { userid },
-=======
 router.post("/sign-in", async (req, res, next) => {
   try {
     const { user_id, password } = req.body;
@@ -121,12 +78,11 @@ router.post("/sign-in", async (req, res, next) => {
     //유저 존재 유무 확인
     const account = await usersPrisma.users.findFirst({
       where: { user_id },
->>>>>>> Stashed changes
     });
     if (!account) {
       return res
         .status(404)
-        .json({ errorMessage: "존재하지 않는 이메일입니다." });
+        .json({ errorMessage: "존재하지 않는 아이디입니다." });
     }
 
     //2) 비밀번호 확인
@@ -137,17 +93,23 @@ router.post("/sign-in", async (req, res, next) => {
     }
 
     // 3) jwt 토큰 생성
+    const token = jwt.sign(
+      {
+        user_id: account.user_id,
+      },
+      "custom-secret-key",
+    );
 
-    return res
-      .status(200)
-      .json({ message: "로그인에 성공했습니다.", data: {} });
-  } catch (err) {
-    next(err);
+    res.cookie("authorization", `Bearer ${token}`);
+    return res.status(200).json({ message: "로그인에 성공했습니다." });
+  } catch (error) {
+    return res.status(500).json({
+      message: "에러가 발생했습니다.",
+      error: error.message,
+    });
   }
 });
 
-<<<<<<< Updated upstream
-=======
 //계정 조회 API
 router.get("/user", authMiddleware, async (req, res, next) => {
   const { user_id } = req.user;
@@ -165,5 +127,4 @@ router.get("/user", authMiddleware, async (req, res, next) => {
   return res.status(200).json({ user });
 });
 
->>>>>>> Stashed changes
 export default router;

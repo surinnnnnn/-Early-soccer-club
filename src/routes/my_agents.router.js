@@ -33,7 +33,10 @@ router.post("/agent/gacha", authMiddleware, async (req, res, next) => {
     });
 
     if (price > player.cash) {
-      return res.status(401).json({ message: "잔액이 부족합니다." });
+      return res.status(401).json({
+        message: "잔액이 부족합니다.",
+        remain_cash: player.cash,
+      });
     }
 
     // 3) 유저가 이미 해당 에이전트를 소유하고 있는지 확인
@@ -71,7 +74,7 @@ router.post("/agent/gacha", authMiddleware, async (req, res, next) => {
     }
 
     // 4) 유저 소지금 업데이트
-    await usersPrisma.users.update({
+    const updatedCash = await usersPrisma.users.update({
       where: { user_id },
       data: {
         cash: { decrement: price }, // 소지금 차감
@@ -82,7 +85,7 @@ router.post("/agent/gacha", authMiddleware, async (req, res, next) => {
     return res.status(200).json({
       message: "선수를 성공적으로 뽑았습니다!",
       agent: randomAgent,
-      current_cash: player.cash,
+      remain_cash: updatedCash.cash,
     });
   } catch (error) {
     next(error); // 에러 핸들링

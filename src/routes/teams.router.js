@@ -9,11 +9,6 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
   try {
     const { user_id } = req.user;
     const { team_name, agent_ids } = req.body;
-    //  입력 예시
-    // {
-    //    "team_name": "팀이름",
-    //    "agent_ids": [1, 2, 3]  // 최소 3명의 agent_id 배열
-    //  }
 
     //1) 필수 입력 누락
     if (!team_name || !agent_ids || agent_ids.length < 3) {
@@ -36,7 +31,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
     });
 
     const members = await gamePrisma.agents.findMany({
-      where: { agent_id: { in: agent_ids } },
+      where: { agent_id: { in: myTeam.agent_ids } },
       select: {
         agent_id: true,
         agent_name: true,
@@ -104,7 +99,7 @@ router.post("/my_team", authMiddleware, async (req, res, next) => {
 
     return res.status(201).json({
       message: "팀이 성공적으로 생성되었습니다.",
-      team: myTeam.team_name,
+      team: newTeam.team_name,
       members,
     });
   } catch (error) {
@@ -213,17 +208,18 @@ router.patch("/my_team", authMiddleware, async (req, res, next) => {
 
 //3.팀 상세 조회(우리팀 과 상대팀의 스탯 비교)
 router.get(
-  "/my_team/:oppositeUser_Id",
+  "/my_team/:opposite_user_id",
   authMiddleware,
   async (req, res, next) => {
     try {
       const { user_id } = req.user;
-      const { oppositeUser_Id } = req.params;
+      const { opposite_user_id } = req.params;
 
       // 1) 보유한 팀이 없음
       const existingTeam = await usersPrisma.team_members.findFirst({
         where: { user_id },
-        include: {
+        select: {
+          team_name: true,
           agent_ids: true, // 팀 멤버 정보 포함
         },
       });
@@ -234,12 +230,9 @@ router.get(
         });
       }
 
-      // 2) 우리팀 멤버들의 agent_id 추출
-      const agent_ids = existingTeam.members.map((member) => member.agent_id);
-
       // 3) 우리팀 멤버 스탯 정보 가져오기
       const myTeamStats = await gamePrisma.agents.findMany({
-        where: { agent_id: { in: agent_ids } },
+        where: { agent_id: { in: existingTeam.agent_ids } },
         select: {
           agent_id: true,
           agent_name: true,
@@ -250,10 +243,11 @@ router.get(
         },
       });
 
-      // 4) 상대팀 정보 가져오기 (oppositeUser_Id 사용)
+      // 4) 상대팀 정보 가져오기
       const otherTeam = await usersPrisma.team_members.findFirst({
-        where: { user_id: oppositeUser_Id },
-        include: {
+        where: { user_id: opposite_user_id },
+        select: {
+          team_name: true,
           agent_ids: true, // 상대 팀 멤버 정보 포함
         },
       });
@@ -264,13 +258,8 @@ router.get(
         });
       }
 
-      // 5) 상대팀 멤버들의 agent_id 추출 및 스탯 정보 가져오기
-      const otherTeamAgentIds = otherTeam.members.map(
-        (member) => member.agent_id,
-      );
-
       const otherTeamStats = await gamePrisma.agents.findMany({
-        where: { agent_id: { in: otherTeamAgentIds } },
+        where: { agent_id: { in: otherTeam.agent_ids } },
         select: {
           agent_id: true,
           agent_name: true,
@@ -291,7 +280,7 @@ router.get(
         },
         opposite_team: {
           team_name: otherTeam.team_name,
-          user_id: oppositeUser_Id,
+          user_id: opposite_user_id,
           members: otherTeamStats,
         },
       });

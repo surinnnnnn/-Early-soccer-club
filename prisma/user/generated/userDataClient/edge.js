@@ -145,7 +145,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\didth\\Documents\\GitHub\\mini_football_game\\prisma\\user\\generated\\userDataClient",
+      "value": "C:\\Users\\didth\\Desktop\\mini-football back up\\prisma\\user\\generated\\userDataClient",
       "fromEnvVar": null
     },
     "config": {
@@ -159,7 +159,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\didth\\Documents\\GitHub\\mini_football_game\\prisma\\user\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\didth\\Desktop\\mini-football back up\\prisma\\user\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -173,7 +173,6 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
