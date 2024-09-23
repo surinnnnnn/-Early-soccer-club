@@ -9,7 +9,6 @@ const router = express.Router();
 router.post("/agent/gacha", authMiddleware, async (req, res, next) => {
   try {
     const { user_id } = req.user;
-    const { count } = req.body;
     const price = 3000; // 가챠 가격
 
     // 1) 에이전트 뽑기

@@ -122,12 +122,26 @@ router.post(
             matches: { increment: 1 },
           },
         });
+        await usersPrisma.users.update({
+          where: { user_id: opposite_user_id },
+          data: {
+            lost: { increment: 1 },
+            matches: { increment: 1 },
+          },
+        });
       } else {
         result = `우리팀 패배..`;
         await usersPrisma.users.update({
           where: { user_id },
           data: {
             lost: { increment: 1 },
+            matches: { increment: 1 },
+          },
+        });
+        await usersPrisma.users.update({
+          where: { user_id: opposite_user_id },
+          data: {
+            win: { increment: 1 },
             matches: { increment: 1 },
           },
         });
