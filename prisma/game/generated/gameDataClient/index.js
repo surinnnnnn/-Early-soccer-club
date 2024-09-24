@@ -116,7 +116,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\didth\\Desktop\\mini-football back up\\prisma\\game\\generated\\gameDataClient",
+      "value": "C:\\Users\\didth\\Documents\\GitHub\\mini_football_game\\prisma\\game\\generated\\gameDataClient",
       "fromEnvVar": null
     },
     "config": {
@@ -127,10 +127,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\didth\\Desktop\\mini-football back up\\prisma\\game\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\didth\\Documents\\GitHub\\mini_football_game\\prisma\\game\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -144,6 +148,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -152,8 +157,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/gameDataClient\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL_GAME\")\n}\n\nmodel agents {\n  agent_id   Int    @id\n  agent_name String @unique\n  attack     Int    @default(10)\n  defense    Int    @default(10)\n  position   String\n}\n",
-  "inlineSchemaHash": "b3bc5de45eac0abc24c6ffcc2bf8ca29c55ffa9ce4c9727d135b0817bfad914b",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"./generated/gameDataClient\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL_GAME\")\n}\n\nmodel agents {\n  agent_id   Int    @id\n  agent_name String @unique\n  attack     Int    @default(10)\n  defense    Int    @default(10)\n  position   String\n}\n",
+  "inlineSchemaHash": "6cbd479a08392ec98eeb688961e92d7555155cf489f44f63714e640057849d7e",
   "copyEngine": true
 }
 
@@ -193,6 +198,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "prisma/game/generated/gameDataClient/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/game/generated/gameDataClient/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/game/generated/gameDataClient/schema.prisma")
